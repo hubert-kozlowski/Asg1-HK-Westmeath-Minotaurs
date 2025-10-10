@@ -1,0 +1,823 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+/* Fjalla One applied site-wide */
+/* Color Palette (CSS Custom Properties)
+    --color-primary  #2E235F
+    --bg-dark        #14102B
+    --bg-card        #1C1333
+    --accent         #7B3FB8
+    --text-light     #F4F4F8
+    --text-muted     #B5AFC7
+*/
+
+:root {
+        /* Colors */
+        --color-primary: #2e235f;
+        --bg-dark: #14102b;
+        --bg-card: #1c1333;
+        --bg-dark-alt: #191030; /* alternating row/background */
+        --accent: #7b3fb8;
+        --text-light: #f4f4f8;
+        --text-muted: #b5afc7;
+
+        /* Radii */
+        --radius-l: 10px;
+        --radius-m: 8px;
+        --radius-s: 6px;
+
+        /* Shadows */
+        --shadow-raised: 0 4px 8px rgba(0, 0, 0, 0.3);
+        --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.04);
+
+        /* Motion */
+        --ease-fast: .18s ease;
+        --ease-faster: .12s linear;
+}
+
+/* ========== GLOBAL / BASE ========== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-card);
+}
+
+main {
+    font-family: "Fjalla One", Arial, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: var(--radius-l);
+    margin: 0 auto;
+}
+
+/* Ensure headings explicitly use Fjalla One */
+h1, h2, h3, h4, h5, h6 { font-family: "Fjalla One", Arial, sans-serif; }
+
+/* Section heading separator for clarity in panels */
+.panel h3 {
+    margin: 6px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--bg-card);
+}
+
+/* Lighter, more readable body copy */
+p, li {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+/* ========== UTILITY FLOAT HELPERS ========== */
+/* Re‑introduced simple float helpers for specific layout needs (e.g. wrapping text around images).
+   Usage example:
+      <div class="about-us clearfix">
+          <img src="..." class="float-left" alt="...">
+          <p>Text that will wrap around the floated image...</p>
+      </div>
+   Add .clearfix on the parent container if it does not already establish block formatting context.
+*/
+.float-left {
+    float: left;
+    margin: 20px 20px 20px 0; /* space to the right & below */
+    padding-right: 12px;
+}
+
+.float-right {
+    float: right;
+    margin: 20px 0 20px 20px; /* space to the left & below */
+    padding-left: 12px;
+}
+
+/* Clearfix utility (apply to parent that contains floated children) */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* On narrower screens, disable floats so content stacks naturally */
+@media (max-width: 700px) {
+    .float-left,
+    .float-right {
+        float: none;
+        display: block;
+        margin: 0 0 20px 0; /* uniform spacing below */
+    }
+}
+
+/* ========== REUSABLE SURFACES & UTILITIES ========== */
+.panel {
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-raised), var(--shadow-inset);
+}
+
+.surface-dark {
+    background: var(--bg-dark);
+    border: 2px solid var(--bg-dark);
+    border-radius: var(--radius-l);
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card);
+    border-radius: var(--radius-m);
+}
+
+.btn, .game-list button {
+    background-color: var(--bg-card);
+    color: var(--text-muted);
+    border: 2px solid var(--bg-dark);
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, color var(--ease-fast), border-color var(--ease-fast);
+}
+
+.btn:hover, .game-list button:hover {
+    background-color: var(--color-primary);
+    color: var(--text-light);
+    border-color: var(--accent);
+}
+
+.img-raised {
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-raised);
+}
+
+/* ========== HEADER & NAVIGATION ========== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: var(--color-primary);
+    padding: 10px 20px;
+    box-shadow: var(--shadow-raised), var(--shadow-inset);
+    border-radius: var(--radius-l) var(--radius-l) 0 0;
+}
+
+header img {
+    height: 80px;
+    width: 80px;
+}
+
+/* Image button navigation (pure CSS) */
+.image-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end; /* right aligned */
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    width: 120px;           /* smaller default size */
+    height: 40px;           /* preserves 3:1 aspect (original 150x50) */
+    display: inline-block;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.45));
+    transition: transform var(--ease-fast), filter var(--ease-fast);
+    border-radius: var(--radius-s); /* helps if images have transparent corners */
+}
+
+/* NAV BUTTON IMAGE SWAP FOR FUCK SAKES AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+    Uses CSS custom properties so we only change image URLs per button.
+    --img-default: normal state image
+    --img-active:  hover / focus / current-page image
+*/
+.nav-btn {
+     --img-default: none;               /* Fallback if a variant forgets to set images */
+     --img-active: var(--img-default);  /* Default: active == default (safe fallback) */
+     background-image: var(--img-default);
+    transition: transform var(--ease-fast), filter var(--ease-fast), background-image var(--ease-faster);
+}
+
+/* Variant buttons: just override the two image variables */
+.nav-btn.home  { 
+     --img-default: url("images/buttons/home-button.png");
+     --img-active:  url("images/buttons/home-button-ACTIVE.png");
+}
+.nav-btn.about {
+     --img-default: url("images/buttons/about-button.png");
+     --img-active:  url("images/buttons/about-button-ACTIVE.png");
+}
+.nav-btn.join  {
+     --img-default: url("images/buttons/join-button.png");
+     --img-active:  url("images/buttons/join-button-ACTIVE.png");
+}
+
+/* Hover, keyboard focus, or current page (aria-current="page")
+    All share the same visual "active" treatment */
+.nav-btn:is(:hover, :focus-visible),
+.nav-btn[aria-current="page"] {
+     background-image: var(--img-active);
+     transform: translateY(-2px);
+     filter: brightness(1.08);
+}
+
+/* Visible focus ring for accessibility + persistent outline on current page */
+.nav-btn[aria-current="page"] { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Small screens: stack but still right align if space */
+@media (max-width: 800px) {
+    /* Mobile: stack logo above nav and center buttons */
+    header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        text-align: center;
+    }
+    .image-nav { 
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .nav-btn {
+        width: 160px;
+        height: 50px;
+    }
+}
+
+/* ========== HERO IMAGE ========== */
+.hero-img {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 0 0 var(--radius-l) var(--radius-l);
+    box-shadow: var(--shadow-raised);
+}
+
+/* Secondary hero image style for non-home pages */
+.hero-img.secondary {
+    height: 250px; /* shorter height for secondary pages */
+    object-fit: cover;
+}
+
+/* ========== WELCOME SECTION ========== */
+.welcome-section {
+    margin-top: 30px;
+    margin-bottom: 30px; 
+}
+
+
+/* ========== UPCOMING GAMES SECTION ========== */
+.upcoming-games {
+    padding: 2px 12px 10px 12px;
+}
+
+.game-list {
+    padding: 15px;
+    margin-top: 20px;
+    text-align: right;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.game-list p,
+.game-list button {
+    display: inline-block;
+    margin: 10px 45px;
+    vertical-align: middle;
+    font-size: 18px;
+    color: var(--text-muted);
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Make only the paragraph items lighter within game list */
+.game-list p {
+    font-weight: 400;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.game-list .game-date {
+    margin-left: 0;
+    margin-right: 170px;
+    color: var(--text-light);
+}
+
+.game-list p:hover {
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.6);
+    color: var(--text-light);
+    transform: scale(1.02);
+}
+
+/* buttons in game list are styled via the shared .btn rules above */
+
+/* Game items */
+.game-item {
+    border-bottom: 1px solid var(--bg-dark);
+    padding: 12px 6px; /* 12px top & bottom, 0 left & right */
+    background: var(--bg-dark);
+    transition: background-color .18s;
+}
+
+.game-item:nth-child(even) {
+    background: var(--bg-dark-alt);
+}
+
+.game-item:hover {
+    background: var(--color-primary);
+}
+
+.game-item:last-child {
+    border-bottom: 0;
+}
+
+/* Team logos in upcoming games */
+.game-team-logo {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4));
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+
+/* RECENT NEWS SECTION */
+.recent-news {
+    margin-top: 34px;
+    padding: 2px 12px 12px 12px;
+}
+
+.recent-news h3 {
+    margin: 10px 0 12px;
+}
+
+.news-strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+}
+
+.news-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 10px;
+    row-gap: 2px;
+    align-items: baseline;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: background var(--ease-fast), color var(--ease-fast), border-color var(--ease-fast), transform var(--ease-fast);
+}
+
+.news-item time {
+    font: 600 12px/1.1 "Fjalla One", Arial, sans-serif;
+    letter-spacing: .3px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.news-item span {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--text-light);
+}
+
+.news-item:is(:hover, :focus-visible) {
+    background: var(--color-primary);
+    color: var(--text-light);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* consolidated focus ring rule appears later */
+
+/* Responsive: more columns on wider screens */
+@media (min-width: 700px) {
+    .news-strip { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1000px) {
+    .news-strip { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .news-item { transition: none; }
+    .news-item:is(:hover, :focus-visible) { transform: none; }
+}
+
+
+/* ========== ABOUT US SECTION ========== */
+.about-us {
+    overflow: hidden;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: var(--bg-card);
+}
+
+/* Remove direct float; use .float-left in markup */
+/* Images now stack naturally; no floats required */
+.about-us img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.about-us p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.22);
+}
+
+/* ========== STANDINGS SECTION (OTHER PAGES) ========== */
+.standings-wrapper {
+    margin-top: 40px;
+    padding: 18px 20px 24px;
+    background: var(--bg-card);
+}
+
+.conf-title {
+    margin: 6px 0 14px;
+    font: 600 14px/1.15 "Fjalla One", Arial, sans-serif;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.standings-scroll {
+    overflow-x: auto;
+    padding: 4px 6px 10px;
+}
+
+.standings-table {
+    width: 100%;
+    min-width: 820px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    line-height: 1.25;
+    color: var(--text-muted);
+}
+
+.standings-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--color-primary);
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--accent);
+    font-size: 14px;
+    letter-spacing: .4px;
+}
+
+.standings-table th:first-child,
+.standings-table td:first-child {
+    text-align: left;
+    padding-left: 18px;
+}
+
+.standings-table tr:not(:first-child) {
+    background: var(--bg-dark);
+    transition: .18s;
+}
+
+.standings-table tr:nth-child(odd):not(:first-child) {
+    background: var(--bg-dark-alt);
+}
+
+.standings-table tr:not(:first-child):hover {
+    background: var(--color-primary);
+    color: var(--text-light);
+}
+
+.standings-table td {
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--bg-card);
+    white-space: nowrap;
+    font-size: 13.5px;
+}
+
+.standings-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.team-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.team-cell img {
+    width: 26px;
+    height: 26px;
+    padding-right: 2px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4));
+}
+
+.stat-pos {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.streak-hot {
+    color: #36d672;
+    font-weight: 600;
+}
+
+.streak-cold {
+    color: #ff5d5d;
+    font-weight: 600;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+@media (max-width: 1200px) {
+
+    .game-list p,
+    .game-list button {
+        margin: 8px 30px;
+        font-size: 16px;
+    }
+
+    .game-list .game-date {
+        margin-right: 120px;
+    }
+
+    .game-team-logo {
+        width: 28px;
+        height: 28px;
+        margin-right: 6px;
+    }
+
+    .standings-table {
+        min-width: 650px;
+        font-size: 12.5px;
+    }
+
+    .standings-table thead th,
+    .standings-table td {
+        padding: 8px 10px;
+    }
+
+    .team-cell img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .game-list p,
+    .game-list button {
+        display: block;
+        margin: 8px auto;
+        text-align: center;
+    }
+
+    .game-list .game-date { margin-right: 0; }
+    .game-list button { margin-top: 12px; }
+
+    .game-team-logo { width: 24px; height: 24px; margin-right: 6px; }
+
+    .standings-table { min-width: 500px; font-size: 11px; }
+    .standings-table thead th,
+    .standings-table td { padding: 6px 8px; }
+    .team-cell img { width: 22px; height: 22px; }
+}
+
+/* ========== GALLERY PAGE ========== */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-raised);
+    transition: transform 0.2s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+
+.caption {
+    text-align: center;
+    margin: 16px 0 8px;
+    letter-spacing: .5px;
+    /* Slightly increased letter spacing for readability */
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.caption a {
+    color: var(--accent);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: var(--radius-s);
+    display: inline-block;
+    background: transparent;
+    transition: background .25s ease, color .25s ease, transform var(--ease-fast);
+}
+
+.caption a:hover,
+.caption a:focus-visible {
+    color: var(--text-light);
+    background: rgba(123, 63, 184, .18);
+    transform: translateY(-2px);
+}
+
+.caption a:active {
+    transform: translateY(0);
+    background: rgba(123, 63, 184, .28);
+}
+
+/* --------- Shared focus ring across interactive elements --------- */
+.nav-btn:focus-visible,
+.news-item:focus-visible,
+.caption a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.gallery-content {
+    margin-bottom: 30px;
+}
+
+/* ========== MATCHUP COMPONENT (Games pages) ========== */
+.matchup {
+    --home-color: var(--color-primary);
+    --away-color: #146c43; /* default away tint (green) */
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+/* Ensure game sections have internal padding so content isn't flush to edges */
+section.panel { padding: 16px; }
+.two-col > .panel { padding: 12px; }
+.game-meta { padding: 6px 8px; }
+
+.matchup-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    box-shadow: var(--shadow-raised);
+}
+
+.team-band {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #fff;
+}
+.team-band.home { background: var(--home-color); }
+.team-band.away { background: var(--away-color); }
+
+.team-logo {
+    width: 44px;
+    height: 44px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.12);
+    box-shadow: 0 2px 6px rgba(0,0,0,.35);
+}
+.team-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.team-meta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+.team-name { font: 700 18px/1 "Fjalla One", Arial, sans-serif; letter-spacing: .3px; }
+.team-badge {
+    display: inline-block;
+    margin-top: 4px;
+    font: 600 11px/1 "Fjalla One", Arial, sans-serif;
+    letter-spacing: .4px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(0,0,0,.16);
+    color: #fff;
+}
+
+.game-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+.game-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+.glance {
+    padding: 12px; /* give breathing room inside glance card */
+}
+.glance-rows { display: grid; }
+.glance-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 10px;
+}
+.glance-row + .glance-row { border-top: 1px solid var(--bg-card); }
+.stat-side { display: flex; align-items: baseline; gap: 8px; }
+.stat-value { font: 700 22px/1 "Fjalla One", Arial, sans-serif; color: var(--text-light); }
+.stat-rank { font: 600 11px/1 "Fjalla One", Arial, sans-serif; color: var(--text-muted); letter-spacing: .3px; }
+.stat-label { font: 600 12px/1 "Fjalla One", Arial, sans-serif; color: var(--text-muted); letter-spacing: .3px; text-transform: uppercase; }
+
+.two-col { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 800px) { .two-col { grid-template-columns: 1fr 1fr; } }
+
+.leader-list, .injury-list { display: grid; gap: 10px; }
+.leader-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: var(--radius-m);
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card);
+}
+.leader-item .avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; }
+.leader-item .avatar img { width: 70%; height: 70%; object-fit: contain; }
+.leader-item .who { display: flex; align-items: center; gap: 8px; }
+.leader-item .who .name { font-weight: 700; color: var(--text-light); }
+.leader-item .who .pos { font: 600 11px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; padding: 2px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.12); color: #fff; }
+.leader-item .sub { font-size: 12px; color: var(--text-muted); }
+.leader-item .sub .metric { font: 700 11px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; color: var(--text-light); margin-right: 6px; }
+.leader-item .stat { font-weight: 700; color: var(--text-light); }
+
+.injury-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: var(--radius-m);
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card);
+}
+.injury-item .player { display: inline-flex; align-items: center; gap: 8px; }
+.injury-item .player .name { font-weight: 600; color: var(--text-light); }
+.injury-item .player .pos { font: 600 10px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; padding: 2px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.12); color: #fff; }
+.injury-item .participation {
+    justify-self: end;
+    font: 600 11px/1 "Fjalla One", Arial, sans-serif;
+    letter-spacing: .4px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.12);
+    color: #fff;
+    white-space: nowrap;
+}
+/* Tint participation badge to match status */
+.injury-item .status-ok ~ .participation {
+    background: rgba(54, 214, 114, .18);
+    border-color: rgba(54, 214, 114, .5);
+    color: #d8ffe8;
+}
+.injury-item .status-limited ~ .participation {
+    background: rgba(255, 176, 32, .18);
+    border-color: rgba(255, 176, 32, .5);
+    color: #fff2d6;
+}
+.injury-item .status-dnp ~ .participation {
+    background: rgba(255, 93, 93, .18);
+    border-color: rgba(255, 93, 93, .5);
+    color: #ffe1e1;
+}
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-ok { background: #36d672; }
+.status-limited { background: #ffb020; }
+.status-dnp { background: #ff5d5d; }
+
+/* Simple theme helpers for matchup colors (basic classes, no advanced features) */
+.theme-minotaurs-rebels { --home-color:#2e235f; --away-color:#00614a; }
+.theme-minotaurs-admirals { --home-color:#2e235f; --away-color:#bf2e1a; }
+.theme-trojans-minotaurs { --home-color:#0b3b7a; --away-color:#2e235f; }
+
+/* Basic heading utility to avoid inline style */
+.subhead { margin: 6px 0; }

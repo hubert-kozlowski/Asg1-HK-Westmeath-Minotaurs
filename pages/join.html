@@ -33,18 +33,43 @@
 
         <div class="join-section panel">
             <h2>Join the Westmeath Minotaurs</h2>
+            <div class="next-session ticker card" aria-live="polite">
+                <span class="tick-label">Next Open Session</span>
+                <span class="status-dot status-ok" aria-hidden="true"></span>
+                <span class="tick-item">
+                    <time datetime="2025-10-26">Sun Oct 26, 2025</time> · 12:00 PM · Mullingar RFC
+                </span>
+                <a class="btn" href="mailto:info@westmeathminotaurs.ie?subject=Open%20Session%20RSVP" title="Email to RSVP">RSVP</a>
+            </div>
             <p>Are you ready to take your passion for American Football to the next level? The Westmeath Minotaurs are always looking for new talent and dedicated individuals to join our team. Whether you're a seasoned player or new to the sport, we welcome players of all skill levels.</p>
             <p>To join the Minotaurs, please fill out our online registration form or contact us directly at <a href="mailto:info@westmeathminotaurs.ie">info@westmeathminotaurs.ie</a>.</p>
         </div>
-        <div class="join-wrapper panel">
-            <form>
-                <input type="text" id="name" name="name" placeholder="Full Name" required><br><br>
-                <input type="email" id="email" name="email" placeholder="Email Address" required><br><br>
-                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required><br><br>
-                <textarea id="experience" name="experience" placeholder="Football Experience (if any)" rows="4"></textarea><br><br>
-                <button class="btn" type="submit">Submit</button>
-            </form>
 
+        <div class="join-wrapper panel">
+            <h3>Register Your Interest</h3>
+            <form class="join-form" action="#" method="post" novalidate>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-field form-span">
+                        <label for="experience">Football Experience (optional)</label>
+                        <textarea id="experience" name="experience" placeholder="Tell us about your experience (if any)" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" type="submit" title="Submit your interest">Submit</button>
+                </div>
+            </form>
         </div>
 
     </main>

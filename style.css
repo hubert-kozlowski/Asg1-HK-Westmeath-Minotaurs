@@ -1,12 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 /* Fjalla One applied site-wide */
-/* Color Palette (CSS Custom Properties)
-    --color-primary  #2E235F
-    --bg-dark        #14102B
-    --bg-card        #1C1333
-    --accent         #7B3FB8
-    --text-light     #F4F4F8
-    --text-muted     #B5AFC7
+/*
+    CSS Guide (quick map)
+    1) Global / Base
+    2) Utility floats & clearfix
+    3) Reusable surfaces & buttons
+    4) Header & image nav
+    5) Hero image
+    6) Welcome section
+    7) Upcoming games (incl. date alignment)
+    8) Recent news
+    9) About us
+ 10) Standings (tables)
+ 11) Responsive helpers (1200px, 900px)
+ 12) Gallery
+ 13) Shared focus ring
+ 14) Matchup component (Games pages)
+ 15) Theme helpers
+
+    Color Palette (CSS Custom Properties)
+        --color-primary  #2E235F
+        --bg-dark        #14102B
+        --bg-card        #1C1333
+        --accent         #7B3FB8
+        --text-light     #F4F4F8
+        --text-muted     #B5AFC7
 */
 
 :root {
@@ -55,7 +73,8 @@ main {
 }
 
 /* Ensure headings explicitly use Fjalla One */
-h1, h2, h3, h4, h5, h6 { font-family: "Fjalla One", Arial, sans-serif; }
+h1, h2, h3, h4, h5, h6 { 
+    font-family: "Fjalla One", Arial, sans-serif; }
 
 /* Section heading separator for clarity in panels */
 .panel h3 {
@@ -83,14 +102,14 @@ p, li {
 */
 .float-left {
     float: left;
-    margin: 20px 20px 20px 0; /* space to the right & below */
-    padding-right: 12px;
+    /* Use margin (not padding) so the image itself fills its rounded corners */
+    margin: 20px 32px 20px 0; /* increased right margin for comfortable text gap */
 }
 
 .float-right {
     float: right;
-    margin: 20px 0 20px 20px; /* space to the left & below */
-    padding-left: 12px;
+    /* Use margin (not padding) so the image itself fills its rounded corners */
+    margin: 20px 0 20px 32px; /* increased left margin for comfortable text gap */
 }
 
 /* Clearfix utility (apply to parent that contains floated children) */
@@ -188,11 +207,9 @@ header img {
     border-radius: var(--radius-s); /* helps if images have transparent corners */
 }
 
-/* NAV BUTTON IMAGE SWAP FOR FUCK SAKES AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
-    Uses CSS custom properties so we only change image URLs per button.
-    --img-default: normal state image
-    --img-active:  hover / focus / current-page image
-*/
+/* Nav button image swap using CSS custom properties
+   - Per-button, set: --img-default (normal), --img-active (hover/focus/current)
+   - Keeps markup simple; only URLs vary per button */
 .nav-btn {
      --img-default: none;               /* Fallback if a variant forgets to set images */
      --img-active: var(--img-default);  /* Default: active == default (safe fallback) */
@@ -268,6 +285,34 @@ header img {
     margin-bottom: 30px; 
 }
 
+/* ========== JOIN PAGE (simple, reusing existing styles) ========== */
+.join-section { padding: 14px 16px 18px; }
+.next-session.ticker { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 10px; padding: 10px 12px; margin: 10px 0 14px; }
+.tick-label { font: 700 12px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .5px; color: var(--text-light); }
+.tick-item { color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.join-wrapper { padding: 14px 16px 18px; }
+.join-wrapper h3 { margin: 8px 0 12px; }
+.join-form { display: block; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field label { font: 600 12px/1 "Fjalla One", Arial, sans-serif; letter-spacing: .4px; color: var(--text-light); }
+.form-field input, .form-field textarea {
+    padding: 10px 12px;
+    border-radius: var(--radius-s);
+    border: 1px solid var(--bg-card);
+    background: var(--bg-dark);
+    color: var(--text-light);
+    outline: none;
+    width: 100%;
+    max-width: 100%;
+}
+.form-field textarea { resize: vertical; }
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--text-muted); }
+.form-span { grid-column: 1 / -1; }
+.form-actions { margin-top: 10px; }
+
+@media (max-width: 800px) { .next-session.ticker { grid-template-columns: 1fr; gap: 8px; } .tick-item { white-space: normal; } .form-grid { grid-template-columns: 1fr; } }
+
 
 /* ========== UPCOMING GAMES SECTION ========== */
 .upcoming-games {
@@ -304,6 +349,15 @@ header img {
     margin-left: 0;
     margin-right: 170px;
     color: var(--text-light);
+}
+
+/* Only the game-date should be left-aligned within a game row.
+   We float just the date left so the rest of the inline items can
+   continue to follow the right-aligned layout of .game-list. */
+.game-item .game-date {
+    float: left;
+    text-align: left;
+    margin-left: 0;
 }
 
 .game-list p:hover {
@@ -418,14 +472,22 @@ header img {
     background-color: var(--bg-card);
 }
 
-/* Remove direct float; use .float-left in markup */
-/* Images now stack naturally; no floats required */
+/* Default: images stack naturally; add .float-left/.float-right to wrap text around images */
 .about-us img {
     width: 100%;
     max-width: 420px;
     height: auto;
     display: block;
     margin: 0 auto 20px;
+}
+
+/* If an About Us image is floated, use outer margins for clean text spacing.
+   This overrides the generic .about-us img margins. */
+.about-us img.float-left {
+    margin: 0 32px 20px 0;
+}
+.about-us img.float-right {
+    margin: 20px 0 20px 32px;
 }
 
 .about-us p {
@@ -518,10 +580,19 @@ header img {
 }
 
 .team-cell img {
-    width: 26px;
-    height: 26px;
-    padding-right: 2px;
+    /* Square logo box that preserves logo aspect via object-fit */
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1 / 1;
     object-fit: contain;
+    object-position: center;
+    flex-shrink: 0; /* keep logo from collapsing in tight space */
+
+    /* Visual polish so all logos appear consistent on dark rows */
+    padding: 2px; /* inner breathing room so edges don’t touch the box */
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid var(--bg-card);
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4));
 }
 
@@ -571,8 +642,8 @@ header img {
     }
 
     .team-cell img {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
     }
 }
 
@@ -587,12 +658,20 @@ header img {
     .game-list .game-date { margin-right: 0; }
     .game-list button { margin-top: 12px; }
 
+    /* Mobile override: other text centers, but keep the date left-aligned */
+    .game-item .game-date {
+        float: none;
+        display: block;
+        margin: 8px 0;
+        text-align: left;
+    }
+
     .game-team-logo { width: 24px; height: 24px; margin-right: 6px; }
 
     .standings-table { min-width: 500px; font-size: 11px; }
     .standings-table thead th,
     .standings-table td { padding: 6px 8px; }
-    .team-cell img { width: 22px; height: 22px; }
+    .team-cell img { width: 20px; height: 20px; }
 }
 
 /* ========== GALLERY PAGE ========== */
@@ -778,9 +857,19 @@ section.panel { padding: 16px; }
     border-radius: var(--radius-m);
     background: var(--bg-card);
     border: 1px solid var(--bg-card);
+    /* Keep all entries visually consistent in height */
+    min-height: 44px;
 }
 .injury-item .player { display: inline-flex; align-items: center; gap: 8px; }
-.injury-item .player .name { font-weight: 600; color: var(--text-light); }
+.injury-item .player .name {
+    font-weight: 600;
+    color: var(--text-light);
+    /* Prevent multi-line wrapping that causes uneven row heights */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: clamp(120px, 30vw, 220px);
+}
 .injury-item .player .pos { font: 600 10px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; padding: 2px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.12); color: #fff; }
 .injury-item .participation {
     justify-self: end;
@@ -815,9 +904,9 @@ section.panel { padding: 16px; }
 .status-dnp { background: #ff5d5d; }
 
 /* Simple theme helpers for matchup colors (basic classes, no advanced features) */
-.theme-minotaurs-rebels { --home-color:#2e235f; --away-color:#00614a; }
+.theme-minotaurs-rebels { --home-color:#2e235f; --away-color:#8c0c0c; }
 .theme-minotaurs-admirals { --home-color:#2e235f; --away-color:#bf2e1a; }
-.theme-trojans-minotaurs { --home-color:#0b3b7a; --away-color:#2e235f; }
+.theme-trojans-minotaurs { --home-color:#1a6307; --away-color:#2e235f; }
 
 /* Basic heading utility to avoid inline style */
 .subhead { margin: 6px 0; }

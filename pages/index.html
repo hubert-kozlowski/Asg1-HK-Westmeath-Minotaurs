@@ -21,16 +21,16 @@
       <img src="../images/logo.png" alt="Westmeath Minotaurs Crest Logo" />
       <h1>Westmeath Minotaurs</h1>
       <nav class="image-nav" aria-label="Main navigation">
-        <a href="index.html" class="nav-btn home" aria-current="page" aria-label="Home"></a>
-        <a href="about.html" class="nav-btn about" aria-label="About"></a>
-        <a href="join.html" class="nav-btn join" aria-label="Join"></a>
+        <a href="index.html" class="nav-btn home animate-fade-in" aria-current="page" aria-label="Home"></a>
+        <a href="about.html" class="nav-btn about animate-fade-in" aria-label="About"></a>
+        <a href="join.html" class="nav-btn join animate-fade-in" aria-label="Join"></a>
       </nav>
     </header>
 
-    <img class="hero-img" src="../images/image.jpg" alt="Westmeath Minotaurs Team Photo" />
+  <div class="hero-img animate-slide-in-up" style="background-image: url('../images/image.jpg');" aria-label="Westmeath Minotaurs Team Photo"></div>
 
-    <div class="welcome-section">
-      <h2>Welcome to the Westmeath Minotaurs</h2>
+    <div class="welcome-section animate-slide-in-left panel">
+      <h2 class="animate-slide-in-left">Welcome to the Westmeath Minotaurs</h2>
       <p>
         American Football is the fastest growing sport in Ireland for a
         reason. Intense, hard hitting, strategic, and challenging. There is no
@@ -46,8 +46,8 @@
       </p>
     </div>
 
-    <div class="upcoming-games panel">
-      <h3>Upcoming Games</h3>
+    <div class="upcoming-games panel animate-slide-in-up">
+      <h3 class="animate-slide-in-left">Upcoming Games</h3>
       <div class="game-list surface-dark">
         <div class="game-item">
           <p class="game-date">October 30th</p>
@@ -81,18 +81,18 @@
       </div>
     </div>
 
-    <section class="recent-news panel">
-      <h3>Recent News</h3>
+    <section class="recent-news panel animate-slide-in-up">
+      <h3 class="animate-slide-in-left">Recent News</h3>
       <div class="news-strip surface-dark">
-        <a class="news-item card" href="#">
+        <a class="news-item card" href="about.html#recent-news">
           <time datetime="2025-10-01">Oct 1, 2025</time>
           <span>Preseason Training Kicks Off</span>
         </a>
-        <a class="news-item card" href="#">
+        <a class="news-item card" href="about.html#recent-news">
           <time datetime="2025-10-08">Oct 8, 2025</time>
           <span>Schedule Announcement</span>
         </a>
-        <a class="news-item card" href="#">
+        <a class="news-item card" href="about.html#recent-news">
           <time datetime="2025-10-15">Oct 15, 2025</time>
           <span>Captaincy Confirmed</span>
         </a>
@@ -141,6 +141,14 @@
 
     </div>
 
+    <footer class="site-footer" role="contentinfo">
+    <p>&copy; 2025 Westmeath Minotaurs</p>
+    <p>
+      <a href="mailto:info@westmeathminotaurs.ie" title="Email the Minotaurs">info@westmeathminotaurs.ie</a>
+      <span aria-hidden="true"> · </span>
+      <span>Made for Web Authoring Assignment</span>
+    </p>
+    </footer>
   </main>
 
 </body>

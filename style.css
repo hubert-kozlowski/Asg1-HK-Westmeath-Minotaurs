@@ -1,57 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
-/* Fjalla One applied site-wide */
 /*
-    CSS Guide (quick map)
-    1) Global / Base
-    2) Utility floats & clearfix
-    3) Reusable surfaces & buttons
-    4) Header & image nav
-    5) Hero image
-    6) Welcome section
-    7) Upcoming games (incl. date alignment)
-    8) Recent news
-    9) About us
- 10) Standings (tables)
- 11) Responsive helpers (1200px, 900px)
- 12) Gallery
- 13) Shared focus ring
- 14) Matchup component (Games pages)
- 15) Theme helpers
+    Quick guide to this CSS (student-friendly notes):
+    - We use CSS variables (custom properties) so you can change colors, spacing, etc. in one place.
+    - Layout is mostly Flexbox and CSS Grid. Floats are used only where we want text to wrap around images.
+    - Media queries near the bottom of sections make things mobile-friendly.
+    Tip: If something looks off, check the variables in :root first!
 
-    Color Palette (CSS Custom Properties)
-        --color-primary  #2E235F
-        --bg-dark        #14102B
-        --bg-card        #1C1333
-        --accent         #7B3FB8
-        --text-light     #F4F4F8
-        --text-muted     #B5AFC7
+    Color Palette (edit here to change site-wide colors)
+        --color-primary  #2E235F  -> main team purple
+        --bg-dark        #14102B  -> page background behind cards
+        --bg-card        #1C1333  -> card/panel surface
+        --accent         #7B3FB8  -> highlight color (focus, borders)
+        --text-light     #F4F4F8  -> main text on dark
+        --text-muted     #B5AFC7  -> softer secondary text
 */
 
 :root {
-        /* Colors */
+        /* Colors (site-wide variables) */
         --color-primary: #2e235f;
         --bg-dark: #14102b;
         --bg-card: #1c1333;
-        --bg-dark-alt: #191030; /* alternating row/background */
+        --bg-dark-alt: #191030; /* used for alternating row/background stripes */
         --accent: #7b3fb8;
         --text-light: #f4f4f8;
         --text-muted: #b5afc7;
 
-        /* Radii */
+        /* Radii (rounded corners) */
         --radius-l: 10px;
         --radius-m: 8px;
         --radius-s: 6px;
 
-        /* Shadows */
+        /* Shadows (depth: raised = outside, inset = inside) */
         --shadow-raised: 0 4px 8px rgba(0, 0, 0, 0.3);
         --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.04);
 
-        /* Motion */
+        /* Motion (animation timing helpers) */
         --ease-fast: .18s ease;
         --ease-faster: .12s linear;
 }
 
 /* ========== GLOBAL / BASE ========== */
+/* Think of this section as the "default rules" before we style specific components. */
 * {
     box-sizing: border-box;
 }
@@ -63,27 +52,31 @@ body {
 }
 
 main {
+    /* We use the display font for headings and main shell for a sporty vibe */
     font-family: "Fjalla One", Arial, sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
     max-width: 1200px;
-    padding: 20px;
+    padding: 32px 24px;
     border-radius: var(--radius-l);
     margin: 0 auto;
 }
 
-/* Ensure headings explicitly use Fjalla One */
+/* Headings: force them to use "Fjalla One" so they look consistent. */
 h1, h2, h3, h4, h5, h6 { 
-    font-family: "Fjalla One", Arial, sans-serif; }
+    font-family: "Fjalla One", Arial, sans-serif;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
 
-/* Section heading separator for clarity in panels */
+/* Small underline under h3 inside panels to separate title from content */
 .panel h3 {
     margin: 6px 0 10px;
     padding-bottom: 6px;
     border-bottom: 1px solid var(--bg-card);
 }
 
-/* Lighter, more readable body copy */
+/* Body text: use system font for readability and a softer color */
 p, li {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
@@ -91,41 +84,33 @@ p, li {
     color: var(--text-muted);
 }
 
-/* ========== UTILITY FLOAT HELPERS ========== */
-/* Re‑introduced simple float helpers for specific layout needs (e.g. wrapping text around images).
-   Usage example:
-      <div class="about-us clearfix">
-          <img src="..." class="float-left" alt="...">
-          <p>Text that will wrap around the floated image...</p>
-      </div>
-   Add .clearfix on the parent container if it does not already establish block formatting context.
-*/
+
 .float-left {
     float: left;
-    /* Use margin (not padding) so the image itself fills its rounded corners */
-    margin: 20px 32px 20px 0; /* increased right margin for comfortable text gap */
+    /* Use margin (not padding) so the picture keeps its rounded-edge look */
+    margin: 20px 32px 20px 0; /* bigger right gap = easier to read wrapped text */
 }
 
 .float-right {
     float: right;
-    /* Use margin (not padding) so the image itself fills its rounded corners */
-    margin: 20px 0 20px 32px; /* increased left margin for comfortable text gap */
+    /* Same idea on the other side */
+    margin: 20px 0 20px 32px; /* bigger left gap */
 }
 
-/* Clearfix utility (apply to parent that contains floated children) */
+/* Clearfix: classic trick to make a parent wrap around its floated children */
 .clearfix::after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* On narrower screens, disable floats so content stacks naturally */
+/* On small screens, we turn off floats so content stacks in a single column. */
 @media (max-width: 700px) {
     .float-left,
     .float-right {
         float: none;
         display: block;
-        margin: 0 0 20px 0; /* uniform spacing below */
+        margin: 0 0 20px 0; /* keep a bit of space below the image */
     }
 }
 
@@ -155,6 +140,7 @@ p, li {
     padding: 10px 20px;
     cursor: pointer;
     text-decoration: none;
+    /* Transitions make hover feel smoother */
     transition: background-color 0.3s ease-in-out, color var(--ease-fast), border-color var(--ease-fast);
 }
 
@@ -169,14 +155,47 @@ p, li {
     box-shadow: var(--shadow-raised);
 }
 
-/* ========== HEADER & NAVIGATION ========== */
+/* ========== ANIMATIONS ========== */
+@keyframes slideInUp {
+    0% { opacity: 0; transform: translateY(40px) scale(0.98); }
+    60% { opacity: 1; transform: translateY(-4px) scale(1.02); }
+    100% { opacity: 1; transform: none; }
+}
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-40px) scale(0.98); }
+    60% { opacity: 1; transform: translateX(4px) scale(1.02); }
+    100% { opacity: 1; transform: none; }
+}
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.98); }
+    60% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 1; transform: none; }
+}
+
+.animate-slide-in-up {
+    animation: slideInUp 0.8s cubic-bezier(.5,.8,.5,1.1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+.animate-slide-in-left {
+    animation: slideInLeft 0.8s cubic-bezier(.5,.8,.5,1.1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+.animate-fade-in {
+    animation: fadeIn 1.1s cubic-bezier(.5,.8,.5,1.1) both;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    animation-delay: 0.1s;
+}
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     background-color: var(--color-primary);
-    padding: 10px 20px;
+    padding: 18px 16px;
     box-shadow: var(--shadow-raised), var(--shadow-inset);
     border-radius: var(--radius-l) var(--radius-l) 0 0;
 }
@@ -186,7 +205,7 @@ header img {
     width: 80px;
 }
 
-/* Image button navigation (pure CSS) */
+/* Image button navigation: these are links that look like buttons using background images. */
 .image-nav {
     display: flex;
     gap: 12px;
@@ -196,20 +215,22 @@ header img {
 
 .nav-btn {
     width: 120px;           /* smaller default size */
-    height: 40px;           /* preserves 3:1 aspect (original 150x50) */
+    height: 40px;           /* 3:1 aspect (like 150x50) */
     display: inline-block;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative;
+    position: relative; /* transform animations use this as the reference point */
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.45));
     transition: transform var(--ease-fast), filter var(--ease-fast);
-    border-radius: var(--radius-s); /* helps if images have transparent corners */
+    border-radius: var(--radius-s); /* soft corners if the PNG has transparent edges */
 }
 
-/* Nav button image swap using CSS custom properties
-   - Per-button, set: --img-default (normal), --img-active (hover/focus/current)
-   - Keeps markup simple; only URLs vary per button */
+/* Nav button image swap using CSS variables
+   How it works:
+   - Each button sets two variables: --img-default (normal), --img-active (on hover/focus/current).
+   - The rule below plugs those variables into background-image.
+   Tip: This keeps HTML clean—only the class changes per button. */
 .nav-btn {
      --img-default: none;               /* Fallback if a variant forgets to set images */
      --img-active: var(--img-default);  /* Default: active == default (safe fallback) */
@@ -217,7 +238,7 @@ header img {
     transition: transform var(--ease-fast), filter var(--ease-fast), background-image var(--ease-faster);
 }
 
-/* Variant buttons: just override the two image variables */
+/* Variant buttons: we just override the two image variables per button type */
 .nav-btn.home  { 
      --img-default: url("images/buttons/home-button.png");
      --img-active:  url("images/buttons/home-button-ACTIVE.png");
@@ -232,7 +253,7 @@ header img {
 }
 
 /* Hover, keyboard focus, or current page (aria-current="page")
-    All share the same visual "active" treatment */
+   All share the same visual "active" look */
 .nav-btn:is(:hover, :focus-visible),
 .nav-btn[aria-current="page"] {
      background-image: var(--img-active);
@@ -240,10 +261,10 @@ header img {
      filter: brightness(1.08);
 }
 
-/* Visible focus ring for accessibility + persistent outline on current page */
+/* Accessibility: keyboard users get a clear outline; current page also shows it */
 .nav-btn[aria-current="page"] { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* Small screens: stack but still right align if space */
+/* Small screens: stack the header content so it fits nicely */
 @media (max-width: 800px) {
     /* Mobile: stack logo above nav and center buttons */
     header {
@@ -264,19 +285,62 @@ header img {
     }
 }
 
+/* ========== FOOTER ========== */
+/* Footer matches the header color to visually "close off" the page.
+   Placed at the bottom of <main> so it sits inside the rounded container. */
+footer.site-footer {
+    background: var(--color-primary);
+    color: var(--text-light);
+    padding: 20px 18px;
+section, article {
+    padding: 24px 18px;
+    box-sizing: border-box;
+}
+    margin-top: 20px; /* space above footer so it doesn't crash into content */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: 0 0 var(--radius-l) var(--radius-l); /* round only the bottom corners */
+    box-shadow: var(--shadow-inset);
+}
+footer.site-footer p { margin: 4px 0; color: var(--text-light); }
+footer.site-footer a { color: var(--text-light); text-decoration: none; opacity: .9; }
+footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: underline; }
+
+@media (max-width: 700px) {
+    footer.site-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+    }
+}
+
 /* ========== HERO IMAGE ========== */
+
 .hero-img {
     width: 100%;
-    height: auto;
+    height: 400px;
     margin-top: 20px;
     border-radius: 0 0 var(--radius-l) var(--radius-l);
     box-shadow: var(--shadow-raised);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* parallax effect */
+    display: block; /* make div behave like an image */
+    transition: height 0.8s cubic-bezier(.5,.8,.5,1.1);
 }
 
-/* Secondary hero image style for non-home pages */
 .hero-img.secondary {
     height: 250px; /* shorter height for secondary pages */
-    object-fit: cover;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    border-radius: 0 0 var(--radius-l) var(--radius-l);
+    box-shadow: var(--shadow-raised);
+    display: block;
 }
 
 /* ========== WELCOME SECTION ========== */
@@ -293,7 +357,7 @@ header img {
 .join-wrapper { padding: 14px 16px 18px; }
 .join-wrapper h3 { margin: 8px 0 12px; }
 .join-form { display: block; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } /* 2 columns on desktop */
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field label { font: 600 12px/1 "Fjalla One", Arial, sans-serif; letter-spacing: .4px; color: var(--text-light); }
 .form-field input, .form-field textarea {
@@ -311,7 +375,7 @@ header img {
 .form-span { grid-column: 1 / -1; }
 .form-actions { margin-top: 10px; }
 
-@media (max-width: 800px) { .next-session.ticker { grid-template-columns: 1fr; gap: 8px; } .tick-item { white-space: normal; } .form-grid { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { /* stack the ticker + form on small screens */ .next-session.ticker { grid-template-columns: 1fr; gap: 8px; } .tick-item { white-space: normal; } .form-grid { grid-template-columns: 1fr; } }
 
 
 /* ========== UPCOMING GAMES SECTION ========== */
@@ -322,9 +386,9 @@ header img {
 .game-list {
     padding: 15px;
     margin-top: 20px;
-    text-align: right;
+    text-align: right; /* by default, items align to the right */
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
-    position: relative;
+    position: relative; /* any absolute children would anchor to this */
 }
 
 .game-list p,
@@ -339,7 +403,7 @@ header img {
     transition: all 0.2s ease;
 }
 
-/* Make only the paragraph items lighter within game list */
+/* Paragraph items get lighter weight so buttons stand out more */
 .game-list p {
     font-weight: 400;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
@@ -351,9 +415,8 @@ header img {
     color: var(--text-light);
 }
 
-/* Only the game-date should be left-aligned within a game row.
-   We float just the date left so the rest of the inline items can
-   continue to follow the right-aligned layout of .game-list. */
+/* We want the date on the left, everything else on the right.
+   Trick: float only the date left; the rest stays inline and right-aligned. */
 .game-item .game-date {
     float: left;
     text-align: left;
@@ -366,7 +429,7 @@ header img {
     transform: scale(1.02);
 }
 
-/* buttons in game list are styled via the shared .btn rules above */
+/* Note: buttons in the game list reuse the shared .btn styles above */
 
 /* Game items */
 .game-item {
@@ -398,7 +461,7 @@ header img {
 }
 
 
-/* RECENT NEWS SECTION */
+/* ========== RECENT NEWS SECTION ========== */
 .recent-news {
     margin-top: 34px;
     padding: 2px 12px 12px 12px;
@@ -447,9 +510,9 @@ header img {
     transform: translateY(-1px);
 }
 
-/* consolidated focus ring rule appears later */
+/* Note: focus ring rules are consolidated later for consistency */
 
-/* Responsive: more columns on wider screens */
+/* Responsive: show more columns as the screen gets wider */
 @media (min-width: 700px) {
     .news-strip { grid-template-columns: repeat(2, 1fr); }
 }
@@ -472,7 +535,7 @@ header img {
     background-color: var(--bg-card);
 }
 
-/* Default: images stack naturally; add .float-left/.float-right to wrap text around images */
+/* Default: images just stack. Add .float-left or .float-right to wrap text around them. */
 .about-us img {
     width: 100%;
     max-width: 420px;
@@ -481,8 +544,8 @@ header img {
     margin: 0 auto 20px;
 }
 
-/* If an About Us image is floated, use outer margins for clean text spacing.
-   This overrides the generic .about-us img margins. */
+/* If the image floats, we give it outer margins so text doesn't crash into it.
+   These override the generic .about-us img margins above. */
 .about-us img.float-left {
     margin: 0 32px 20px 0;
 }
@@ -580,16 +643,16 @@ header img {
 }
 
 .team-cell img {
-    /* Square logo box that preserves logo aspect via object-fit */
+    /* Square logo box: object-fit keeps weird logos from stretching */
     width: 24px;
     height: 24px;
     aspect-ratio: 1 / 1;
     object-fit: contain;
     object-position: center;
-    flex-shrink: 0; /* keep logo from collapsing in tight space */
+    flex-shrink: 0; /* stop the logo from squishing in tight spaces */
 
-    /* Visual polish so all logos appear consistent on dark rows */
-    padding: 2px; /* inner breathing room so edges don’t touch the box */
+    /* Visual polish so all logos look consistent on dark rows */
+    padding: 2px; /* small inner gap so edges don’t touch */
     border-radius: 6px;
     background: rgba(255, 255, 255, .06);
     border: 1px solid var(--bg-card);
@@ -658,7 +721,7 @@ header img {
     .game-list .game-date { margin-right: 0; }
     .game-list button { margin-top: 12px; }
 
-    /* Mobile override: other text centers, but keep the date left-aligned */
+    /* Mobile override: we still keep the date left so it's easy to scan */
     .game-item .game-date {
         float: none;
         display: block;
@@ -699,7 +762,7 @@ header img {
     text-align: center;
     margin: 16px 0 8px;
     letter-spacing: .5px;
-    /* Slightly increased letter spacing for readability */
+    /* Slightly increased letter spacing helps readability */
     font-size: 14px;
     color: var(--text-muted);
 }
@@ -726,7 +789,8 @@ header img {
     background: rgba(123, 63, 184, .28);
 }
 
-/* --------- Shared focus ring across interactive elements --------- */
+/* --------- Shared focus ring across interactive elements ---------
+   Hint: this gives keyboard users a visible outline when tabbing through links. */
 .nav-btn:focus-visible,
 .news-item:focus-visible,
 .caption a:focus-visible {
@@ -747,7 +811,7 @@ header img {
     margin-top: 20px;
 }
 
-/* Ensure game sections have internal padding so content isn't flush to edges */
+/* Add padding inside key sections so content doesn't touch edges */
 section.panel { padding: 16px; }
 .two-col > .panel { padding: 12px; }
 .game-meta { padding: 6px 8px; }
@@ -809,7 +873,7 @@ section.panel { padding: 16px; }
 .game-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
 
 .glance {
-    padding: 12px; /* give breathing room inside glance card */
+    padding: 12px; /* give breathing room inside the glance card */
 }
 .glance-rows { display: grid; }
 .glance-row {
@@ -903,10 +967,10 @@ section.panel { padding: 16px; }
 .status-limited { background: #ffb020; }
 .status-dnp { background: #ff5d5d; }
 
-/* Simple theme helpers for matchup colors (basic classes, no advanced features) */
+/* Theme helpers for matchup colors (swap classes to change colors) */
 .theme-minotaurs-rebels { --home-color:#2e235f; --away-color:#8c0c0c; }
 .theme-minotaurs-admirals { --home-color:#2e235f; --away-color:#bf2e1a; }
 .theme-trojans-minotaurs { --home-color:#1a6307; --away-color:#2e235f; }
 
-/* Basic heading utility to avoid inline style */
+/* Utility: small subhead spacing so we avoid writing inline styles */
 .subhead { margin: 6px 0; }

@@ -22,18 +22,17 @@
             <img src="../images/logo.png" alt="Westmeath Minotaurs Crest Logo">
             <h1>Westmeath Minotaurs</h1>
             <nav class="image-nav" aria-label="Main navigation">
-                <a href="index.html" class="nav-btn home" aria-label="Home"></a>
-                <a href="about.html" class="nav-btn about" aria-current="page" aria-label="About"></a>
-                <a href="join.html" class="nav-btn join" aria-label="Join"></a>
+                <a href="index.html" class="nav-btn home animate-fade-in" aria-label="Home"></a>
+                <a href="about.html" class="nav-btn about animate-fade-in" aria-current="page" aria-label="About"></a>
+                <a href="join.html" class="nav-btn join animate-fade-in" aria-label="Join"></a>
             </nav>
         </header>
 
-        
-    <img class="hero-img secondary" src="../images/image.jpg" alt="Westmeath Minotaurs Team Photo" />
+        <!-- Restructured Layout for User Friendliness -->
+        <div class="hero-img secondary animate-slide-in-up" style="background-image: url('../images/image.jpg');" aria-label="Westmeath Minotaurs Team Photo"></div>
 
-
-        <div class="about-section panel">
-            <h2>About Us</h2>
+        <div class="about-section panel animate-slide-in-left">
+            <h2 class="animate-slide-in-left">About Us</h2>
             <p>The Westmeath Minotaurs are a dedicated American Football team based in County Westmeath, Ireland.
                 Established in 2012, we have quickly grown to become one of the most competitive teams in the Irish
                 American Football League (IAFL).</p>
@@ -45,7 +44,28 @@
                 love for the game.</p>
         </div>
 
-        <div class="standings-wrapper panel">
+        <section class="news-section panel animate-slide-in-left" id="recent-news">
+            <h2 class="animate-slide-in-left">Recent News</h2>
+            <div class="news-list">
+                <article class="news-item">
+                    <h3>Minotaurs Clinch Playoff Spot!</h3>
+                    <p>The Westmeath Minotaurs secured their place in the playoffs after a thrilling victory over the Dublin Rebels. The team showed incredible determination and teamwork throughout the season.</p>
+                    <span class="news-date">October 10, 2025</span>
+                </article>
+                <article class="news-item">
+                    <h3>New Training Facility Opens</h3>
+                    <p>We are excited to announce the opening of our new training facility in Mullingar. This state-of-the-art venue will help our players reach new heights and welcome more members to the club.</p>
+                    <span class="news-date">September 28, 2025</span>
+                </article>
+                <article class="news-item">
+                    <h3>Minotaurs Host Youth Camp</h3>
+                    <p>Our annual youth camp was a huge success, with over 50 young athletes learning the fundamentals of American Football from our experienced coaching staff.</p>
+                    <span class="news-date">September 15, 2025</span>
+                </article>
+            </div>
+        </section>
+
+        <div class="standings-wrapper panel animate-slide-in-up">
             <div class="conf-title"><abbr title="American Football Ireland">AFI</abbr> Premier Division</div>
             <div class="standings-scroll surface-dark">
                 <table class="standings-table">
@@ -170,8 +190,16 @@
 
             </div>
 
-    </main>
+            <footer class="site-footer" role="contentinfo">
+                <p>&copy; 2025 Westmeath Minotaurs</p>
+                <p>
+                    <a href="mailto:info@westmeathminotaurs.ie" title="Email the Minotaurs">info@westmeathminotaurs.ie</a>
+                    <span aria-hidden="true"> · </span>
+                    <span>Made for Web Authoring Assignment</span>
+                </p>
+            </footer>
 
+    </main>
 
 </body>
 

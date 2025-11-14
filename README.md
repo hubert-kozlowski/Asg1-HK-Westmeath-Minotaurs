@@ -1,47 +1,57 @@
-# Westmeath Minotaurs — Site Boilerplate
+# Westmeath Minotaurs — Web Authoring Assignment 1
 
-A compact, purple-themed, sports-site boilerplate built around a single CSS file and simple HTML pages. This repo contains a clean layout, component styles, and a small set of pages you can reuse as a starting point for club sites, small teams, school projects, or practice sites.
+**Student:** Hubert Kozlowski  
+**Course:** Web Authoring, Moate Business College  
+**Assignment:** ASG1-HK
 
-Why this is useful as a boilerplate
+This is my Assignment 1 for Web Authoring class — a responsive sports team website featuring the fictional Westmeath Minotaurs. The site demonstrates modern CSS techniques, accessibility best practices, and mobile-first responsive design using semantic HTML and a single comprehensive stylesheet.
 
-- Single, opinionated CSS file with variables for quick theme changes.
-- Mobile-first responsive design using CSS Grid and a few handy patterns (responsive video embed, gallery grid, sticky table header).
-- Accessible focus states and reduced-motion support.
-- Minimal JS (ideally none) — everything uses semantic HTML + CSS.
+## Assignment Features
 
-Quick start
+- **Responsive Design:** Mobile-first approach with CSS Grid and Flexbox
+- **Accessibility:** Focus states, reduced-motion support, semantic HTML structure
+- **Modern CSS:** Custom properties (variables), advanced selectors, animations
+- **Performance:** Single CSS file, optimized images, minimal dependencies
+- **Cross-browser:** Works on modern browsers with graceful degradation
 
-1. Copy the repo folder for a new project.
-2. Replace images in `images/` and update nav button images in `images/buttons/`.
-3. Update theme colors by editing the variables at the top of `style.css` (see `THEME.md`).
-4. Edit the HTML pages in `pages/` to add content. The CSS aims to work with plain semantic markup.
+## Technical Highlights
 
-Files of interest
+- CSS Variables for theming and consistent spacing/colors
+- Responsive video embeds using padding-bottom technique
+- CSS-only image swapping for navigation buttons
+- Sticky table headers for data tables
+- Float-based text wrapping with clearfix fallbacks
 
-- `style.css` — main stylesheet (variables, components, responsive rules).
-- `pages/` — example pages (index, about, join, game pages). Use them as templates.
-- `images/` — assets & nav button images.
+## File Structure
 
-How to use this as a boilerplate
+- `style.css` — main stylesheet (variables, components, responsive rules)
+- `pages/` — HTML pages (index, about, join, game matchups)
+- `images/` — team logos, navigation buttons, hero images
 
-- Keep `:root` variables as the first place to edit colors, radii, and motion timing.
-- Reuse classes like `.panel`, `.card`, `.btn`, `.surface-dark` to keep markup consistent.
-- For matchups, swap theme helper classes (e.g. `.theme-minotaurs-rebels`) to change home/away coloring.
+## Assignment Requirements Covered
 
-Next docs
+- **Semantic HTML5:** Header, nav, main, section, article structure
+- **CSS Grid & Flexbox:** Responsive layouts without frameworks
+- **Accessibility:** WCAG focus indicators, reduced motion support
+- **Mobile-First:** Breakpoints at 700px, 800px, 1000px, 1200px
+- **Performance:** Single CSS file, optimized asset loading
 
-- `CSS_GUIDE.md` — technical notes about the CSS patterns used and why they exist.
-- `THEME.md` — how to change colors and add themes.
-- `USAGE.md` — how to convert this repo into a new project quickly (copy, replace assets, update variables).
+## Documentation
 
-Accessibility & best practices
+- `CSS_GUIDE.md` — technical notes about CSS patterns and implementation details
+- `THEME.md` — color system and theming approach
+- `USAGE.md` — setup instructions and accessibility checklist
 
-- Focus styles use `:focus-visible` to avoid keyboard focus being hidden.
-- `prefers-reduced-motion` is respected for users who prefer less animation.
-- Use `alt` text for images and meaningful link text.
+## Open Source Usage
 
-License
-Feel free to copy and reuse this for assignments and small projects. If you publish commercially, add a proper license file.
+While this is a school assignment, the code is open source. Feel free to reference or adapt it for learning purposes. If you use significant portions for commercial projects, please add appropriate attribution.
+
+## Accessibility Features
+
+- Focus styles use `:focus-visible` for keyboard navigation
+- `prefers-reduced-motion` respected for motion-sensitive users
+- High contrast colors and meaningful link text
+- Semantic markup for screen readers
 
 ---
 

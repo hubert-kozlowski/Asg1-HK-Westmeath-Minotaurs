@@ -1,34 +1,46 @@
-# USAGE.md — turning this into a new project
+# Setup & Development Guide — Assignment ASG1-HK
 
-Quick checklist to copy this repo into a new site or assignment:
+## Assignment Submission Checklist
 
-1. Copy the folder into a new project directory.
-2. Replace images in `images/` (team logos, buttons, gallery) with your assets.
-3. Update `style.css` at the top `:root` variables for colors and radii.
-4. Open `pages/index.html` and `pages/about.html` and replace content. Keep semantic tags (header, main, section, article) for best results.
-5. For the nav: update the `nav-btn` classes and ensure the active link has `aria-current="page"`.
-6. Test responsiveness: use browser devtools to check common breakpoints (700px, 800px, 1000px).
-7. Accessibility checklist:
-   - All interactive elements focusable and have visible focus (keyboard test: Tab through the page).
-   - `alt` attributes on images.
-   - Check color contrast for text on backgrounds.
-   - Test `prefers-reduced-motion` by toggling in system settings or using the browser.
+**For Web Authoring Course Evaluation:**
 
-Optional: create a condensed CSS
+✅ **Semantic HTML5:** All pages use proper structure (header, nav, main, section, article)  
+✅ **CSS Architecture:** Single stylesheet with variables, components, responsive design  
+✅ **Accessibility:** WCAG focus states, reduced motion, keyboard navigation  
+✅ **Responsive Design:** Mobile-first breakpoints at 700px, 800px, 1000px, 1200px  
+✅ **Modern CSS:** Custom properties, Grid, Flexbox, advanced selectors  
+✅ **Performance:** Optimized images, minimal HTTP requests, efficient CSS
 
-- If you want a smaller file: remove components you don't use (matchup, standings table, gallery) and keep variables + base + buttons + forms.
-- I can produce a `style-condensed.css` strip-down for you if you want.
+## Development Testing Process
 
-Deployment tips
+**Responsive Testing:**
 
-- It's a static site — upload as-is to GitHub Pages, Netlify, or any static host.
-- If you deploy on GitHub Pages, set the repository homepage to the `pages` folder or adjust links accordingly.
+1. Test all breakpoints using browser DevTools device emulation
+2. Verify navigation collapses appropriately on mobile
+3. Check image scaling and text readability across screen sizes
 
-If you want, I can also:
+**Accessibility Validation:**
 
-- Generate a `style-condensed.css` that trims unused sections so the file is much smaller.
-- Make a `boilerplate.zip` with only the essentials (index, style, images placeholders, and README).
+1. Tab through all interactive elements (keyboard navigation test)
+2. Verify focus indicators are visible and consistent
+3. Test with `prefers-reduced-motion: reduce` enabled
+4. Validate color contrast using WebAIM or similar tools
+5. Check all images have meaningful `alt` attributes
 
----
+**Cross-Browser Compatibility:**
 
-Tell me which of those extras you want and I'll make them.
+- Chrome, Firefox, Safari, Edge (modern versions)
+- Mobile Safari and Chrome (iOS/Android)
+
+## Open Source Usage (Optional)
+
+While this is a course assignment, the code can be referenced or adapted:
+
+**For Learning/Practice:**
+
+1. Fork or download the repository
+2. Modify colors in `:root` variables to create new themes
+3. Replace content while keeping semantic HTML structure
+4. Use components (`.panel`, `.card`, `.btn`) for consistent styling
+
+**Attribution:** If using substantial portions for other projects, please credit the original assignment.

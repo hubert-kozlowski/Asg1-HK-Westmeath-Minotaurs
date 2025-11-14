@@ -338,6 +338,22 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
     transition: height 0.8s cubic-bezier(.5,.8,.5,1.1);
 }
 
+/* Fix mobile hero image display - disable parallax and adjust sizing */
+@media (max-width: 800px) {
+    .hero-img {
+        background-attachment: scroll; /* disable parallax on mobile for better performance and display */
+        background-size: cover;
+        background-position: center top; /* show more of the top portion on mobile */
+        height: 300px; /* slightly shorter on mobile */
+    }
+    
+    .hero-img.secondary {
+        background-attachment: scroll;
+        background-position: center top;
+        height: 200px;
+    }
+}
+
 .hero-img.secondary {
     height: 250px; /* shorter height for secondary pages */
     background-position: center center;

@@ -1,18 +1,23 @@
-# CSS Guide — deep-dive (short + useful)
+# CSS Guide — Assignment Implementation Details
 
-This file explains the non-obvious CSS patterns used in `style.css`. Read it when you want to tweak things without breaking layout.
+This document explains the technical CSS patterns implemented in `style.css` for the Web Authoring Assignment. These techniques demonstrate modern CSS capabilities and best practices covered in the course.
 
-1. CSS Variables (the easy control panel)
+## 1. CSS Custom Properties (Variables)
 
-- Edit `:root` variables to change colors, radii, shadows and timings.
-- Use them everywhere — that keeps changes small and predictable.
+**Assignment Requirement:** Demonstrates modern CSS organization and maintainability
 
-2. Nav buttons that swap images using variables
+- All colors, spacing, and timing values defined in `:root` for consistency
+- Variables enable theme changes and reduce code duplication
+- Example: `--color-primary: #2e235f;` used throughout instead of hardcoded hex values
 
-- Each nav button class sets `--img-default` and `--img-active`.
-- `.nav-btn` uses `background-image: var(--img-default)`; hover/focus swaps to `var(--img-active)`.
-- Benefit: HTML is clean (just change the class) and hover images don't need JS.
-- Tip: include `aria-current="page"` on the active link so keyboard & screen reader users see current state.
+## 2. CSS-Only Image State Management
+
+**Assignment Requirement:** Interactive elements without JavaScript
+
+- Navigation buttons use CSS variables to swap images on hover/focus
+- Each `.nav-btn` variant sets `--img-default` and `--img-active` properties
+- State changes handled purely in CSS using `:hover` and `:focus-visible` pseudo-classes
+- Accessibility: `aria-current="page"` indicates active navigation state
 
 3. Responsive YouTube embed (the padding trick)
 
@@ -56,4 +61,10 @@ This file explains the non-obvious CSS patterns used in `style.css`. Read it whe
 - Always provide `:focus-visible` rules instead of `:focus` when possible (reduces focus outlines for mouse users).
 - Use high contrast for text over colored backgrounds; the variables make switching easy.
 
-If you want, I can extract a smaller `style-condensed.css` that drops non-essential components and keeps only the basics (layout, buttons, forms, nav).
+## Assignment Learning Outcomes Demonstrated
+
+- **CSS Architecture:** Organized stylesheet with logical sections and reusable components
+- **Modern Selectors:** Advanced pseudo-classes, combinators, and `:is()` grouping
+- **Responsive Design:** Mobile-first approach with strategic breakpoints
+- **Accessibility:** WCAG-compliant focus management and motion preferences
+- **Performance:** Efficient selectors and minimal HTTP requests

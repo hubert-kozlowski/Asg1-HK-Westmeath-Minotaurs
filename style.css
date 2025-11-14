@@ -104,7 +104,6 @@ p, li {
 }
 
 /* ========== REUSABLE SURFACES & UTILITIES ========== */
-/* ========== REUSABLE COMPONENTS ========== */
 .panel, .card, .surface-dark {
     border-radius: var(--radius-l);
     box-shadow: var(--shadow-raised), var(--shadow-inset);
@@ -237,12 +236,7 @@ header img {
     transition: all 0.2s ease;
 }
 
-/* Nav button image swap using CSS variables
-   How it works:
-   - Each button sets two variables: --img-default (normal), --img-active (on hover/focus/current).
-   - The rule below plugs those variables into background-image.
-   Tip: This keeps HTML clean—only the class changes per button. 
-   it's like having a template that we can customize with different images */
+
 .nav-btn {
      --img-default: none;               /* Fallback if a variant forgets to set images */
      --img-active: var(--img-default);  /* Default: active == default (safe fallback) */
@@ -704,10 +698,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
     border-color: var(--accent);
 }
 
-/* Note: focus ring rules are consolidated later for consistency */
 
-/* Responsive: show more columns as the screen gets wider 
-   starts as 1 column, then 2 on tablets, then 3 on desktop - pretty neat */
 @media (min-width: 700px) {
     .news-strip { grid-template-columns: repeat(2, 1fr); }
 }

@@ -1,29 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
-/*
-    SIMPLIFIED & CONDENSED CSS - WESTMEATH MINOTAURS
-    
-    Structure:
-    1. CSS Variables (colors, spacing, timing)
-    2. Global/Base styles (body, headings, text)
-    3. Reusable Components (panels, cards, buttons, forms)
-    4. Layout Elements (header, navigation, sections)
-    5. Page-specific styles
-    6. Responsive design
-    
-    Key Principles:
-    - Shared classes reduce duplication (.panel, .card, .btn, etc.)
-    - Universal focus states for accessibility
-    - Consistent transitions and animations
-    - Mobile-first responsive design
-    
-    Color System:
-        --color-primary  #2E235F  -> main team purple
-        --bg-dark        #14102B  -> page background
-        --bg-card        #1C1333  -> card/panel surface
-        --accent         #7B3FB8  -> highlight color (sparingly used)
-        --text-light     #F4F4F8  -> primary text
-        --text-muted     #B5AFC7  -> secondary text
-*/
 
 :root {
         /* Colors (site-wide variables) */
@@ -40,11 +15,13 @@
         --radius-m: 8px;
         --radius-s: 6px;
 
-        /* Shadows (depth: raised = outside, inset = inside) */
+        /* Shadows (depth: raised = outside, inset = inside) 
+           basically raised makes stuff look like it's popping out, inset makes it look pressed in */
         --shadow-raised: 0 4px 8px rgba(0, 0, 0, 0.3);
         --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.04);
 
-        /* Motion (animation timing helpers) */
+        /* Motion (animation timing helpers) 
+           these make transitions feel smooth instead of robotic */
         --ease-fast: .18s ease;
         --ease-faster: .12s linear;
 }
@@ -52,7 +29,7 @@
 /* ========== GLOBAL / BASE ========== */
 /* Think of this section as the "default rules" before we style specific components. */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box; /* makes width/height include padding & borders - way easier to work with */
 }
 
 body {
@@ -107,14 +84,16 @@ p, li {
     margin: 20px 0 20px 32px; /* bigger left gap */
 }
 
-/* Clearfix: classic trick to make a parent wrap around its floated children */
+/* Clearfix: classic trick to make a parent wrap around its floated children 
+   basically forces the parent to "see" floated stuff inside it so it doesn't collapse */
 .clearfix::after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* On small screens, we turn off floats so content stacks in a single column. */
+/* On small screens, we turn off floats so content stacks in a single column. 
+   floats are kinda annoying on mobile anyway */
 @media (max-width: 700px) {
     .float-left,
     .float-right {
@@ -205,6 +184,7 @@ a[href^="mailto:"]:hover {
 }
 
 /* ========== ANIMATIONS ========== */
+/* this animation makes stuff slide in with a little bounce - looks way cooler than just fading in */
 @keyframes slideIn {
     0% { opacity: 0; transform: translate(var(--from-x, 0), var(--from-y, 40px)) scale(0.98); }
     60% { opacity: 1; transform: translate(calc(var(--from-x, 0) * -0.1), calc(var(--from-y, 40px) * -0.1)) scale(1.02); }
@@ -261,7 +241,8 @@ header img {
    How it works:
    - Each button sets two variables: --img-default (normal), --img-active (on hover/focus/current).
    - The rule below plugs those variables into background-image.
-   Tip: This keeps HTML clean—only the class changes per button. */
+   Tip: This keeps HTML clean—only the class changes per button. 
+   it's like having a template that we can customize with different images */
 .nav-btn {
      --img-default: none;               /* Fallback if a variant forgets to set images */
      --img-active: var(--img-default);  /* Default: active == default (safe fallback) */
@@ -383,12 +364,13 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 /* ========== JOIN PAGE (simple, reusing existing styles) ========== */
 .join-section { padding: 14px 16px 18px; }
 
-/* Video Container - responsive YouTube embed */
+/* Video Container - responsive YouTube embed 
+   this weird padding trick forces the container to keep a 16:9 ratio no matter the screen size */
 .video-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
-    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) - math is fun lol */
+    height: 0; /* height 0 because padding-bottom does the work */
     overflow: hidden;
     border-radius: var(--radius-l);
     box-shadow: var(--shadow-raised);
@@ -397,7 +379,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 }
 
 .video-container iframe {
-    position: absolute;
+    position: absolute; /* this makes the iframe fill the container we made above */
     top: 0;
     left: 0;
     width: 100%;
@@ -408,7 +390,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 
 .next-session.ticker { 
     display: grid; 
-    grid-template-columns: auto auto 1fr auto; 
+    grid-template-columns: auto auto 1fr auto; /* creates 4 columns: icon, label, stretch space, time */
     align-items: center; 
     gap: 10px; 
     padding: 10px 12px; 
@@ -588,7 +570,8 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 }
 
 /* We want the date on the left, everything else on the right.
-   Trick: float only the date left; the rest stays inline and right-aligned. */
+   Trick: float only the date left; the rest stays inline and right-aligned. 
+   it's like having two columns but without the grid headache */
 .game-item .game-date {
     float: left;
     text-align: left;
@@ -616,7 +599,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
     border-bottom: 1px solid var(--bg-dark);
 }
 
-.game-item:nth-child(even) { background: var(--bg-dark-alt); }
+.game-item:nth-child(even) { background: var(--bg-dark-alt); } /* zebra stripes to make scanning easier */
 .game-item:hover, .news-list .news-item:hover {
     background: var(--color-primary);
     border-left-color: var(--accent);
@@ -723,7 +706,8 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 
 /* Note: focus ring rules are consolidated later for consistency */
 
-/* Responsive: show more columns as the screen gets wider */
+/* Responsive: show more columns as the screen gets wider 
+   starts as 1 column, then 2 on tablets, then 3 on desktop - pretty neat */
 @media (min-width: 700px) {
     .news-strip { grid-template-columns: repeat(2, 1fr); }
 }
@@ -732,6 +716,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
     .news-strip { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* respect user preferences - some people get motion sick from animations */
 @media (prefers-reduced-motion: reduce) {
     .news-item { transition: none; }
     .news-item:is(:hover, :focus-visible) { transform: none; }
@@ -954,7 +939,7 @@ footer.site-footer a:is(:hover, :focus-visible) { opacity: 1; text-decoration: u
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* magic! makes columns that fit but never go below 200px */
     gap: 15px;
     margin-top: 20px;
 }
@@ -1086,7 +1071,7 @@ section.panel { padding: 16px; }
 .glance-rows { display: grid; }
 .glance-row {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto 1fr; /* left stat, center label, right stat - like a mirror */
     align-items: center;
     gap: 10px;
     padding: 12px 10px;
@@ -1097,13 +1082,13 @@ section.panel { padding: 16px; }
 .stat-rank { font: 600 11px/1 "Fjalla One", Arial, sans-serif; color: var(--text-muted); letter-spacing: .3px; }
 .stat-label { font: 600 12px/1 "Fjalla One", Arial, sans-serif; color: var(--text-muted); letter-spacing: .3px; text-transform: uppercase; }
 
-.two-col { display: grid; grid-template-columns: 1fr; gap: 12px; }
-@media (min-width: 800px) { .two-col { grid-template-columns: 1fr 1fr; } }
+.two-col { display: grid; grid-template-columns: 1fr; gap: 12px; } /* starts as one column */
+@media (min-width: 800px) { .two-col { grid-template-columns: 1fr 1fr; } } /* becomes two equal columns on wider screens */
 
 .leader-list, .injury-list { display: grid; gap: 10px; }
 .leader-item {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto; /* avatar, player info (stretches), stat number */
     gap: 10px;
     align-items: center;
     padding: 8px 10px;
@@ -1136,10 +1121,11 @@ section.panel { padding: 16px; }
 .injury-item .player .name {
     font-weight: 600;
     color: var(--text-light);
-    /* Prevent multi-line wrapping that causes uneven row heights */
+    /* Prevent multi-line wrapping that causes uneven row heights 
+       clamp() is sick - it gives us a min, preferred, and max width all in one */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; /* adds the "..." when text is too long */
     max-width: clamp(120px, 30vw, 220px);
 }
 .injury-item .player .pos { font: 600 10px/1 "Fjalla One", Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; padding: 2px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.12); color: #fff; }
@@ -1154,7 +1140,8 @@ section.panel { padding: 16px; }
     color: #fff;
     white-space: nowrap;
 }
-/* Tint participation badge to match status */
+/* Tint participation badge to match status 
+   the ~ selector is cool - it targets elements that come AFTER another element with that class */
 .injury-item .status-ok ~ .participation {
     background: rgba(54, 214, 114, .18);
     border-color: rgba(54, 214, 114, .5);
@@ -1175,7 +1162,8 @@ section.panel { padding: 16px; }
 .status-limited { background: #ffb020; }
 .status-dnp { background: #ff5d5d; }
 
-/* Theme helpers for matchup colors (swap classes to change colors) */
+/* Theme helpers for matchup colors (swap classes to change colors) 
+   just add one of these classes to change the whole matchup color scheme */
 .theme-minotaurs-rebels { --home-color:#2e235f; --away-color:#8c0c0c; }
 .theme-minotaurs-admirals { --home-color:#2e235f; --away-color:#bf2e1a; }
 .theme-trojans-minotaurs { --home-color:#1a6307; --away-color:#2e235f; }
